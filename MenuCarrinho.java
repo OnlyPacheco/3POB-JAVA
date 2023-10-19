@@ -14,7 +14,7 @@ public class MenuCarrinho {
         do {
             exibirMenu();
             opcao = scanner.nextInt();
-            scanner.nextLine();
+            scanner.nextLine(); // Consumir a nova linha
 
             switch (opcao) {
                 case 1:
@@ -22,11 +22,36 @@ public class MenuCarrinho {
                     String idProduto = scanner.nextLine();
                     System.out.print("Informe a quantidade do produto a ser incluído: ");
                     int quantidade = scanner.nextInt();
-                    IncluirProdutoCarrinho.incluirProdutoCarrinho(carrinho, listaProdutos, idProduto, quantidade);
+                    scanner.nextLine(); 
+                    Produto produto = null;
+
+                    for (Produto p : listaProdutos) {
+                        if (p.getidProduto().equals(idProduto)) {
+                            produto = p;
+                            break;
+                        }
+                    }
+
+                
+                    if ( produto != null)
+                    {
+                        IncluirProdutoCarrinho.incluirProdutoCarrinho(carrinho,produto,  quantidade);
+                        System.out.println("Produto adicionado ao carrinho com sucesso!");
+                    }
+                     else
+                    {
+                       System.out.println("Produto não encontrado!");
+                    }
+                  
                     break;
+                
                 case 2:
-                    ListarProdutosCarrinho.listarProdutosCarrinho(carrinho);
-                    break;
+                Carrinho carrinhoObj = new Carrinho(); 
+                carrinhoObj.atualizarCarrinho(carrinho);
+                ListarProdutosIncluidosCarrinho.listarProdutosIncluidos(carrinho, carrinhoObj); // 
+                break;
+
+                    
                 case 3:
                     System.out.println("Saindo do menu do Carrinho.");
                     break;
@@ -35,4 +60,5 @@ public class MenuCarrinho {
             }
         } while (opcao != 3);
     }
+
 }
